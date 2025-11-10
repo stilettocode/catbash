@@ -31,6 +31,12 @@ std::string getTodayDate() {
 }
 
 int main() {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD dwMode = 0;
+    GetConsoleMode(hOut, &dwMode);
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    SetConsoleMode(hOut, dwMode);
+
     int savedInt = 0;
     std::string savedString;
     std::string lastRunDate;
