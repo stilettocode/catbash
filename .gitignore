@@ -1,0 +1,57 @@
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+state.txt
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in/
+[Oo]bj/
+
+# NuGet Packages
+*.nupkg
+**/packages/*
+# Except build/, which is used as an MSBuild target
+!**/packages/build/
+# Uncomment if necessary; generally it will be regenerated when needed.
+#!**/packages/repositories.config
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.scc
+
+# Resharper files
+*.resharper
+
+# Rider files
+.idea/
+
+# DotNet CLI files
+.vs/
