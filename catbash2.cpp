@@ -30,6 +30,10 @@ std::string getTodayDate() {
     return std::string(buf);
 }
 
+#include <iostream>
+#include <fstream>
+#include <cstdio>
+
 int main() {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
     DWORD dwMode = 0;
@@ -58,6 +62,34 @@ int main() {
     }
 
     std::unordered_map<std::string, std::function<void(std::vector<std::string>)>> cmd_table = {
+        {"yo", [](auto args) {
+            if (args.empty()) {
+                std::cout << "Usage: yo <your question>\n";
+            return;
+            }
+            std::string question;
+            std::string helper = "? Please answer in a concise sentence.";
+            for (const auto& arg : args) question += arg + " ";
+
+            std::string cmd = "llama-cli.exe -m catgemma.gguf -p \"" + question + helper + "\" -n 50 2>nul --no-conversation";
+
+            FILE* pipe = _popen(cmd.c_str(), "r");
+            if (!pipe) {
+                std::cerr << "Failed to run llama-cli\n";
+                return;
+            }
+            char buffer[256];
+            std::cout << "\n\033[32mCATBOT:\033[0m\n";
+            while (fgets(buffer, sizeof(buffer), pipe)) {
+                std::string line = buffer;
+                if (line.find(question) != std::string::npos || line.find("[end of text]") != std::string::npos || line.find("```") != std::string::npos) {
+                    continue;
+                }
+                std::cout << buffer;
+            }
+            _pclose(pipe);
+            std::cout << "\n";
+        }},
         {"meow", [](auto args) { std::cout << "Meow!" << std::endl; }},
         {"ls", [](auto args) { system("dir"); }},
         {"cd", [](auto args) {
@@ -90,12 +122,13 @@ int main() {
                     ++savedInt;
                     std::cout << "You've fed " << savedString << " " << savedInt << " times so far.\n";
                     std::ofstream ofs("state.txt");
-                    ofs << savedInt << "\n" << savedString << "\n";
+                    ofs << savedInt << "\n" << savedString << "\n" << lastRunDate << "\n";
                     ofs.close();
                 }
             }
             else if (args[0] == "adopt") {
                 savedInt = 0;
+				lastRunDate = "";
                 if (args.size() < 2) {
                     std::cout << "catbash: no name specified for adoption\n";
                     return;
@@ -136,6 +169,7 @@ int main() {
             "\033[36mgit commands work with git replaced with cat. make sure you have git installed.\n\n"
             "catbash adopt <name> to adopt your first cat, or adopt a new one.\n"
             "catbash feed to feed your cat.\n"
+            "yo <prompt> for command help.\n\n"
             "feed your cat every day to watch it grow!\033[0m\n\n";
     }
     else if (savedInt > 0 && savedInt < 4) {
@@ -148,6 +182,7 @@ int main() {
             "\033[36mgit commands work with git replaced with cat. make sure you have git installed.\n"
             "catbash adopt <name> to adopt your first cat, or adopt a new one.\n"
             "catbash feed to feed your cat.\n"
+            "yo <prompt> for command help.\n\n"
             "feed your cat every day to watch it grow!\033[0m\n\n";
     }
     else if (savedInt > 3 && savedInt < 11) {
@@ -165,6 +200,7 @@ int main() {
             "\033[36mgit commands work with git replaced with cat. make sure you have git installed.\n"
             "catbash adopt <name> to adopt your first cat, or adopt a new one.\n"
             "catbash feed to feed your cat.\n"
+            "yo <prompt> for command help.\n\n"
             "feed your cat every day to watch it grow!\033[0m\n\n";
     }
     else if (savedInt > 10 && savedInt < 26) {
@@ -180,6 +216,7 @@ int main() {
             "\033[36mgit commands work with git replaced with cat. make sure you have git installed.\n"
             "catbash adopt <name> to adopt your first cat, or adopt a new one.\n"
             "catbash feed to feed your cat.\n"
+            "yo <prompt> for command help.\n\n"
             "feed your cat every day to watch it grow!\033[0m\n\n";
     }
     else if (savedInt > 25 && savedInt < 76) {
@@ -200,6 +237,7 @@ int main() {
             "\033[36mgit commands work with git replaced with cat. make sure you have git installed.\n"
             "catbash adopt <name> to adopt your first cat, or adopt a new one.\n"
             "catbash feed to feed your cat.\n"
+            "yo <prompt> for command help.\n\n"
             "feed your cat every day to watch it grow!\033[0m\n\n";
     }
 
