@@ -82,7 +82,7 @@ int main() {
             std::cout << "\n\033[32mCATBOT:\033[0m\n";
             while (fgets(buffer, sizeof(buffer), pipe)) {
                 std::string line = buffer;
-                if (line.find(question) != std::string::npos || line.find("[end of text]") != std::string::npos || line.find("```") != std::string::npos) {
+                if (line.find(question) != std::string::npos || line.find("[end of text]") != std::string::npos || line.find("```") != std::string::npos || line.find("**Okay, hereΓÇÖs a concise answer : **") != std::string::npos) {
                     continue;
                 }
                 std::cout << buffer;
