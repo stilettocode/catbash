@@ -51,8 +51,28 @@ std::unordered_map<std::string, std::function<void(std::vector<std::string>)>> m
            _pclose(pipe);
            std::cout << "\n";
        }},
-       {"meow", [](auto args) { std::cout << "Meow!" << std::endl; }},
        {"ls", [](auto args) { system("dir"); }},
+       {"clear", [](auto args) { system("cls"); }},
+       {"touch", [](auto args) {
+            if (args.empty()) {
+                std::cout << "touch: missing file argument\n";
+                return;
+            }
+            else {
+                system(("type nul > " + args[0]).c_str());
+            }
+        }},
+       {"rm", [](auto args) {
+            if (args.empty()) {
+                std::cout << "rm: missing file argument\n";
+                return;
+            } else if (args[0] == "-r") {
+                system(("rmdir /s " + args[1]).c_str());
+            }
+            else {
+                system(("del " + args[0]).c_str());
+            }
+        }},
        {"cd", [](auto args) {
                if (args.empty()) {
                    std::cout << "cd: missing folder argument\n";
