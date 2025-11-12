@@ -126,8 +126,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="catbash2.cpp" />
+    <ClCompile Include="catcommands.cpp" />
+    <ClCompile Include="greetings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="catcommands.h" />
+    <ClInclude Include="greetings.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
