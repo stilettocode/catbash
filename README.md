@@ -2,6 +2,9 @@ I wanted to experiment with packaging stuff into .exe's and some CLI related cod
 
 ![Screenshot of Catbash](funbash.png)
 
+Update 11/12/25:
+Broke my big monolothic code structure into a bunch of more organized files. From now on I'll try and write down every time I try to use a command or something and it doesn't exist, and I'll add it every month or so.
+
 Update 11/11/25: 
 There was a llama.cpp flag the whole time. Added and quantized gemma is now working. Additional threads were not necessary.
 
